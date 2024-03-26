@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "fori_backend": {
+      "main": "src/fori_backend/main.mo",
+      "type": "motoko"
+    },
+    "fori_frontend": {
+      "dependencies": [
+        "fori_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/fori_frontend/src/index.html"
+      },
+      "source": [
+        "src/fori_frontend/assets",
+        "dist/fori_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
