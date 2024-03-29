@@ -1,0 +1,23 @@
+/* App.css */
+
+/* 프로필 영역 스타일 */
+#profileArea {
+  text-align: start;
+}
+
+/* 로그인/로그아웃 버튼 스타일 */
+button {
+  padding: 8px 16px;
+  margin-top: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* 로그인/로그아웃 버튼 호버 효과 */
+button:hover {
+  background-color: royalblue;
+}
