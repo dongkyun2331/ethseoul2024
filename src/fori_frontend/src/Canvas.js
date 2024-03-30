@@ -2,17 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./App.css"; // App.css 파일에 body의 background-color를 설정해주세요.
 
 function Canvas() {
-  const [text, setText] = useState(""); // 입력된 텍스트 상태
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
-
-  const handleInputChange = (e) => {
-    setText(e.target.value); // 입력 값 업데이트
-  };
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d"); // 캔버스 컨텍스트 가져오기
+    const ctx = canvas.getContext("2d");
     canvas.width = 1024;
     canvas.height = 576;
 
@@ -44,71 +38,101 @@ function Canvas() {
       };
     };
 
-    // 텍스트 그리기 함수
-    const drawText = (ctx, text, x, y) => {
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "black";
-      ctx.fillText(text, x, y);
+    // Sprite 클래스 정의
+    class Sprite {
+      constructor({ position, image }) {
+        this.position = position;
+        this.image = image;
+      }
+
+      draw(ctx) {
+        ctx.drawImage(this.image, this.position.x, this.position.y);
+      }
+    }
+
+    // 캔버스에 그릴 스프라이트 객체 생성
+    const background = new Sprite({
+      position: { x: -785, y: -650 },
+      image: image,
+    });
+
+    // 키보드 이벤트 관리 객체
+    const keys = {
+      w: { pressed: false },
+      a: { pressed: false },
+      s: { pressed: false },
+      d: { pressed: false },
     };
 
-    // 애니메이션 함수 내부에 위치 텍스트 그리기 추가
+    let lastKey = "";
+    // 애니메이션 함수
     function animate() {
       window.requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스를 지움
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height); // 배경 채우기
-      ctx.drawImage(image, -750, -550); // 배경 이미지 그리기
-
+      background.draw(ctx); // 배경 스프라이트 그리기
       ctx.drawImage(
         playerImage,
         0,
         0,
         playerImage.width / 4,
         playerImage.height,
-        canvas.width / 2 - playerImage.width / 8 + playerPosition.x, // 캐릭터 위치에 추가
-        canvas.height / 2 - playerImage.height / 2 + playerPosition.y, // 캐릭터 위치에 추가
+        canvas.width / 2 - playerImage.width / 8,
+        canvas.height / 2 - playerImage.height / 2,
         playerImage.width / 4,
         playerImage.height
       ); // 플레이어 이미지 그리기
 
-      drawText(
-        ctx,
-        text,
-        canvas.width / 2 + playerPosition.x,
-        canvas.height / 2 + playerPosition.y
-      );
-      // 캐릭터 위치를 중심으로 입력된 텍스트를 그립니다.
+      // 키 입력에 따라 배경 위치 변경
+      if (keys.w.pressed && lastKey === "w") background.position.y += 3;
+      else if (keys.a.pressed && lastKey === "a") background.position.x += 3;
+      else if (keys.s.pressed && lastKey === "s") background.position.y -= 3;
+      else if (keys.d.pressed && lastKey === "d") background.position.x -= 3;
     }
     animate();
 
     // 키보드 이벤트 처리
     window.addEventListener("keydown", (e) => {
       switch (e.key) {
-        case "ArrowUp":
-          setPlayerPosition((prevPos) => ({ ...prevPos, y: prevPos.y - 5 }));
+        case "w":
+          keys.w.pressed = true;
+          lastKey = "w";
           break;
-        case "ArrowDown":
-          setPlayerPosition((prevPos) => ({ ...prevPos, y: prevPos.y + 5 }));
+        case "a":
+          keys.a.pressed = true;
+          lastKey = "a";
           break;
-        case "ArrowLeft":
-          setPlayerPosition((prevPos) => ({ ...prevPos, x: prevPos.x - 5 }));
+        case "s":
+          keys.s.pressed = true;
+          lastKey = "s";
           break;
-        case "ArrowRight":
-          setPlayerPosition((prevPos) => ({ ...prevPos, x: prevPos.x + 5 }));
+        case "d":
+          keys.d.pressed = true;
+          lastKey = "d";
           break;
       }
     });
-  }, [text]); // text 상태가 변경될 때마다 useEffect 실행
+
+    window.addEventListener("keyup", (e) => {
+      switch (e.key) {
+        case "w":
+          keys.w.pressed = false;
+          break;
+        case "a":
+          keys.a.pressed = false;
+          break;
+        case "s":
+          keys.s.pressed = false;
+          break;
+        case "d":
+          keys.d.pressed = false;
+          break;
+      }
+    });
+  }, []);
 
   return (
     <div className="App">
       <canvas></canvas>
-      <input
-        type="text"
-        value={text}
-        onChange={handleInputChange}
-        placeholder="글을 입력하세요"
-      />
     </div>
   );
 }
