@@ -49,6 +49,7 @@ const App = () => {
             <button id="logoutBtn" onClick={handleLogout}>
               로그아웃
             </button>
+            <Canvas />
           </div>
         </div>
       ) : (
@@ -56,7 +57,6 @@ const App = () => {
           <button id="loginBtn" onClick={handleLogin}>
             로그인
           </button>
-          <Canvas />
         </>
       )}
     </div>

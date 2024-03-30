@@ -3,7 +3,11 @@ import "./App.css"; // App.css 파일에 body의 background-color를 설정해�
 
 function Canvas() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  
+  const [text, setText] = useState(""); // 입력된 텍스트 상태
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
+  const handleInputChange = (e) => {
+    setText(e.target.value); // 입력 값 업데이트
+  };
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
@@ -37,6 +41,13 @@ function Canvas() {
           playerImage.height
         );
       };
+    };
+
+    // 텍스트 그리기 함수
+    const drawText = (ctx, text, x, y) => {
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "black";
+      ctx.fillText(text, x, y);
     };
 
     // Sprite 클래스 정의
