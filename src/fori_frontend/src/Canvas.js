@@ -3,7 +3,7 @@ import "./App.css"; // App.css 파일에 body의 background-color를 설정해�
 
 function Canvas() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  
+  const [message, setMessage] = useState(""); // 캐릭터가 말할 내용 상태 추가
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
@@ -83,6 +83,11 @@ function Canvas() {
         playerImage.height
       ); // 플레이어 이미지 그리기
 
+      // 캐릭터가 말하는 내용 표시
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.fillText(message, canvas.width / 2 - 50, canvas.height / 2 + 50);
+
       // 키 입력에 따라 배경 위치 변경
       if (keys.w.pressed && lastKey === "w") background.position.y += 3;
       else if (keys.a.pressed && lastKey === "a") background.position.x += 3;
@@ -129,10 +134,23 @@ function Canvas() {
           break;
       }
     });
-  }, []);
+  }, [message]); // message 상태가 변경될 때마다 재렌더링
+
+  // 엔터키 입력 시 메시지 업데이트
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setMessage(e.target.value);
+      e.target.value = ""; // 입력 창 비우기
+    }
+  };
 
   return (
     <div className="App">
+      <input
+        type="text"
+        placeholder="캐릭터가 말하는 내용을 입력하세요."
+        onKeyDown={handleKeyDown}
+      />
       <canvas></canvas>
     </div>
   );
