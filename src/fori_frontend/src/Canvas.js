@@ -146,11 +146,7 @@ function Canvas() {
 
   return (
     <div className="App">
-      <input
-        type="text"
-        placeholder="캐릭터가 말하는 내용을 입력하세요."
-        onKeyDown={handleKeyDown}
-      />
+      <input type="text" placeholder="Name or Text" onKeyDown={handleKeyDown} />
       <canvas></canvas>
     </div>
   );

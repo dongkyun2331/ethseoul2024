@@ -47,16 +47,16 @@ const App = () => {
         <div>
           <div id="profileArea">
             <button id="logoutBtn" onClick={handleLogout}>
-              로그아웃
+              Logout
             </button>
+            <Canvas />
           </div>
         </div>
       ) : (
         <>
           <button id="loginBtn" onClick={handleLogin}>
-            로그인
+            Login
           </button>
-          <Canvas />
         </>
       )}
     </div>
