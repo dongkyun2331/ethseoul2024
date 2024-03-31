@@ -38,7 +38,7 @@ const App = () => {
 
   const handleLogout = () => {
     // 로그아웃 처리 (예시 코드, 실제 사용에 따라 처리 필요)
-    alert("로그아웃 되었습니다.");
+    alert("logout");
     setPublicKey(""); // 인증 정보 초기화 등 추가 작업 가능
   };
 
