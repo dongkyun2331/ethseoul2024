@@ -1,3 +1,6 @@
+# tileset
+https://cypor.itch.io/12x12-rpg-tileset
+
 # fori
 
 Welcome to your new fori project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
