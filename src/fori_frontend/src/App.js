@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AuthClient } from "@dfinity/auth-client";
 import "./App.css";
 import Canvas from "./Canvas";
+import Memo from "./Memo";
 
 const App = () => {
   const [publicKey, setPublicKey] = useState("");
@@ -50,6 +51,7 @@ const App = () => {
               Logout
             </button>
             <Canvas />
+            <Memo />
           </div>
         </div>
       ) : (
